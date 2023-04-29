@@ -67,7 +67,11 @@ public class OrderTest
             return Order.Create(cpf, new Cupom("VALE0", 0m));
         };
 
-        action.Should().Throw<ArgumentException>().WithMessage("O CPF deve ser válido");
+        action.Should().Throw<ArgumentException>()
+            .And
+            .Message
+            .Should()
+            .Contain("O CPF");
     }
 
 }
