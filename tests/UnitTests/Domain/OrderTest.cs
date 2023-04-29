@@ -61,7 +61,11 @@ public class OrderTest
     [Trait("Domain", "Order")]
     public void NaoDeveSerPossivelCriarUmPedido_QuandoOCpfEInvalido()
     {
-        var action = () => Order.Create(Cpf.Create("000.000.00.00"), new Cupom("VALE0", 0m));
+        var action = () =>
+        {
+            var cpf = Cpf.Create("000.000.00.00");
+            return Order.Create(cpf, new Cupom("VALE0", 0m));
+        };
 
         action.Should().Throw<ArgumentException>().WithMessage("O CPF deve ser válido");
     }
