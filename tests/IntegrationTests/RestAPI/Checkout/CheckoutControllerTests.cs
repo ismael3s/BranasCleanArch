@@ -21,7 +21,7 @@ public class CheckoutControllerTests : IClassFixture<ApplicationWebFactory>
         {
             new CheckoutInputItemDto("Produto 1", 200M, 2)
         };
-        var checkoutInput = new CheckoutInputDto("07242927560", items);
+        var checkoutInput = new CheckoutInputDto("63966871009", items);
         // Act
         var response = await client.PostAsJsonAsync("/checkout", checkoutInput);
         // Assert
