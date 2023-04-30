@@ -24,6 +24,8 @@ public class CheckoutControllerTests : IClassFixture<ApplicationWebFactory>
         var checkoutInput = new CheckoutInputDto("63966871009", items);
         // Act
         var response = await client.PostAsJsonAsync("/checkout", checkoutInput);
+
+        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         // Assert
         response.EnsureSuccessStatusCode();
         var checkoutOutput = JsonConvert.DeserializeObject<CheckoutOutputDto>(

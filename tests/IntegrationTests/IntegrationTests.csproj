@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Application\Application.csproj" />
     <ProjectReference Include="..\..\src\Infra.Data\Infra.Data.csproj" />
     <ProjectReference Include="..\..\src\Infra.IoC\Infra.IoC.csproj" />
     <ProjectReference Include="..\..\src\RestAPI\RestAPI.csproj" />
