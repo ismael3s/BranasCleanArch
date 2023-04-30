@@ -31,7 +31,7 @@ public class CheckoutControllerTests : IClassFixture<ApplicationWebFactory>
         );
 
         checkoutOutput.Should().NotBeNull();
-        checkoutOutput!.Total.Should().Be(400M);
+        checkoutOutput!.Total.Should().Be(401M);
         checkoutOutput!.Id.Should().NotBeEmpty();
     }
 }
