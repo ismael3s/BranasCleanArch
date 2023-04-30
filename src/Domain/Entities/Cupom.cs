@@ -11,6 +11,11 @@ public class Cupom
         Validate();
     }
 
+    public static Cupom Create(string code, decimal discount)
+    {
+        return new Cupom(code, discount);
+    }
+
     public void Validate()
     {
         if (string.IsNullOrWhiteSpace(Code)) throw new ArgumentException("O Código não pode ser vazio");
