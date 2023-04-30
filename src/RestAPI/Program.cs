@@ -28,3 +28,6 @@ app.MapPost("/checkout", async (CheckoutInputDto checkoutInputDto, ICheckoutUseC
 
 app.Run();
 
+
+
+public partial class Program { }
