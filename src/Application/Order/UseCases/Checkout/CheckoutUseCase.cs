@@ -1,11 +1,10 @@
 ﻿using Application.Order.Repositories;
-using Application.SeedWork;
 using Domain.Entities;
 using Domain.VO;
 using Entities = Domain.Entities;
 
 namespace Application.Order.UseCases.Checkout;
-public class CheckoutUseCase : IUseCase<CheckoutInputDto, CheckoutOutputDto>
+public class CheckoutUseCase : ICheckoutUseCase
 {
 
     private readonly ICupomRepository _cupomRepository;

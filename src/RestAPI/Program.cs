@@ -1,14 +1,15 @@
-using Application;
+using Application.Order.UseCases.Checkout;
 using Infra.IoC;
-
 var builder = WebApplication.CreateBuilder(args);
+
 var configuration = builder.Configuration;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddServices(configuration);
+builder.Services.AddInfra(configuration);
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,15 +18,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/checkout", (ISomeService someService) =>
+
+app.MapPost("/checkout", async (CheckoutInputDto checkoutInputDto, ICheckoutUseCase useCase) =>
 {
-    someService.Do();
-    return true;
+    var output = await useCase.Handle(checkoutInputDto, CancellationToken.None);
+    return output;
 })
-.WithName("Checkout")
-.WithTags("Checkout");
+.WithName("Checkout");
 
 app.Run();
-
-public partial class Program { }
 
