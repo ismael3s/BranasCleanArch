@@ -7,7 +7,7 @@ public class Order
 
     public Cupom? Cupom { get; private set; }
 
-    public List<OrderItem> Items { get; private set; }
+    public IList<OrderItem> Items { get; private set; }
 
     private Order(Cpf cpf, Cupom? cupom = null)
     {
