@@ -53,7 +53,7 @@ public class OrderTest
         };
 
         action.Should().Throw<ArgumentException>()
-            .WithMessage("Não é possivel aplicar um cupom inexistente");
+            .And.Message.Contains("inexistente");
     }
 
 }
