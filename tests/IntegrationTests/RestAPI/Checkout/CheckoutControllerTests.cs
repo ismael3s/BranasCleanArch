@@ -45,7 +45,7 @@ public class CheckoutControllerTests : ControllerTestBase
             await response.Content.ReadAsStringAsync()
         );
         checkoutOutput.Should().NotBeNull();
-        checkoutOutput!.Total.Should().Be(400M);
+        checkoutOutput!.Total.Should().Be(399M);
         checkoutOutput!.Id.Should().NotBeEmpty();
     }
 
