@@ -17,17 +17,14 @@ public class CheckoutControllerTests
     [Trait("Integration/CheckoutController", "Checkout - POST")]
     public async Task POST_CheckoutController_DeveSerPossivelCriarUmPedidoCom3Produtos()
     {
-        // Arrange
         var client = _factory.CreateClient();
         var items = new List<CheckoutInputItemDto>()
         {
             new CheckoutInputItemDto("Produto 1", 200M, 2)
         };
         var checkoutInput = new CheckoutInputDto("63966871009", items);
-        // Act
         var response = await client.PostAsJsonAsync("/checkout", checkoutInput);
 
-        // Assert
         response.EnsureSuccessStatusCode();
         var checkoutOutput = JsonConvert.DeserializeObject<CheckoutOutputDto>(
             await response.Content.ReadAsStringAsync()
