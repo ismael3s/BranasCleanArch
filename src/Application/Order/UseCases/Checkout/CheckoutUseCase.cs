@@ -32,6 +32,7 @@ public class CheckoutUseCase : ICheckoutUseCase
         if (input.CouponCode is not null)
         {
             var cupom = await _cupomRepository.FindByCode(input.CouponCode);
+            if (cupom.IsExpired(DateTime.Now)) throw new ArgumentException("Cupom expirado");
             order.ApplyCupom(cupom);
         }
 

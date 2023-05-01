@@ -5,19 +5,21 @@ public class Coupon
     public Guid Id { get; private set; }
     public string Code { get; private set; }
     public decimal Discount { get; private set; }
-    public Coupon(Guid? id, string code, decimal discount)
+    public DateTime ExpiresAt { get; private set; }
+    public Coupon(Guid? id, string code, decimal discount, DateTime expiresAt)
     {
         Id = id ?? Guid.NewGuid();
         Code = code;
         Discount = discount;
-
+        ExpiresAt = expiresAt;
         Validate();
     }
 
-    public static Coupon Create(string code, decimal discount, Guid? id = default)
+    public static Coupon Create(string code, decimal discount, Guid? id = default, DateTime expiresAt = default!)
     {
-        return new Coupon(id, code, discount);
+        return new Coupon(id, code, discount, expiresAt);
     }
+    public bool IsExpired(DateTime currentDate) => ExpiresAt < currentDate;
 
     public void Validate()
     {

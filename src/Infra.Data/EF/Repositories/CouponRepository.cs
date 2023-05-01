@@ -14,6 +14,6 @@ public sealed class CouponRepository : ICouponRepository
     {
         var cupomModel = await _context.Coupons.FirstOrDefaultAsync(c => c.Code == cupomCode) ?? throw new ArgumentException("Cupom não encontrado");
 
-        return new Coupon(cupomModel.Id, cupomModel.Code, cupomModel.Discount);
+        return new Coupon(cupomModel.Id, cupomModel.Code, cupomModel.Discount, DateTime.Now);
     }
 }
