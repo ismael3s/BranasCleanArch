@@ -9,12 +9,18 @@ public class CheckoutUseCase : ICheckoutUseCase
 
     private readonly ICupomRepository _cupomRepository;
     private readonly IOrderRepository _orderRepository;
+    private readonly IProductRepository _productRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CheckoutUseCase(ICupomRepository cupomRepository, IOrderRepository orderRepository, IUnitOfWork unitOfWork)
+    public CheckoutUseCase(
+        ICupomRepository cupomRepository,
+        IOrderRepository orderRepository,
+        IUnitOfWork unitOfWork,
+        IProductRepository productRepository)
     {
         _cupomRepository = cupomRepository;
         _orderRepository = orderRepository;
+        _productRepository = productRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -29,9 +35,10 @@ public class CheckoutUseCase : ICheckoutUseCase
             order.ApplyCupom(cupom);
         }
 
-        input.Items.ForEach(item =>
+        input.Items.ForEach(async item =>
         {
-            var orderItem = new OrderItem(item.Description, item.Price, item.Quantity);
+            var product = await _productRepository.GetById(Guid.Parse(item.ProductId));
+            var orderItem = new OrderItem(product.Id, product.Price, item.Quantity);
             order.AddItem(orderItem);
         });
 

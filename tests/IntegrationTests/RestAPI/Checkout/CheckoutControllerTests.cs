@@ -1,29 +1,44 @@
 ﻿using Application.Order.UseCases.Checkout;
 using FluentAssertions;
+using Infra.Data.EF;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 
 
 namespace IntegrationTests.RestAPI.Checkout;
 [Collection(nameof(SharedTestCollection))]
-public class CheckoutControllerTests
+public class CheckoutControllerTests : ControllerTestBase
 {
-    private readonly ApplicationWebFactory _factory;
-    public CheckoutControllerTests(ApplicationWebFactory factory)
+    private readonly ApplicationWebFactory _applicationWebFactory;
+    public CheckoutControllerTests(ApplicationWebFactory factory) : base(factory)
     {
-        _factory = factory;
+        _applicationWebFactory = factory;
     }
     [Fact(DisplayName = nameof(POST_CheckoutController_DeveSerPossivelCriarUmPedidoCom3Produtos))]
     [Trait("Integration/CheckoutController", "Checkout - POST")]
     public async Task POST_CheckoutController_DeveSerPossivelCriarUmPedidoCom3Produtos()
     {
-        var client = _factory.CreateClient();
+        Func<AppDbContext, Task> actions = async (AppDbContext db) =>
+        {
+            db.Database.EnsureCreated();
+            db?.Products?.Add(new Infra.Data.EF.Models.Product()
+            {
+                Id = Guid.Parse("493bc090-7961-432c-8794-c2a2407ca321"),
+                Name = "Produto 1",
+                Price = 200M,
+            });
+            await db!.SaveChangesAsync();
+        };
+
+        await _applicationWebFactory.SeedWithAsync(actions);
+
         var items = new List<CheckoutInputItemDto>()
         {
-            new CheckoutInputItemDto("Produto 1", 200M, 2)
+            new CheckoutInputItemDto("493bc090-7961-432c-8794-c2a2407ca321", 2)
         };
         var checkoutInput = new CheckoutInputDto("63966871009", items);
-        var response = await client.PostAsJsonAsync("/checkout", checkoutInput);
+
+        var response = await this.Client.PostAsJsonAsync("/checkout", checkoutInput);
 
         response.EnsureSuccessStatusCode();
         var checkoutOutput = JsonConvert.DeserializeObject<CheckoutOutputDto>(
@@ -39,14 +54,14 @@ public class CheckoutControllerTests
     public async Task POST_CheckoutController_NaoDeveSerPossivelCriarUmPedidoComCpfInvalido()
     {
         // Arrange
-        var client = _factory.CreateClient();
+
         var items = new List<CheckoutInputItemDto>()
         {
-            new CheckoutInputItemDto("Produto 1", 200M, 2)
+            new CheckoutInputItemDto("Produto 1", 2)
         };
         var checkoutInput = new CheckoutInputDto("000.000.000-00", items);
         // Act
-        var response = await client.PostAsJsonAsync("/checkout", checkoutInput);
+        var response = await this.Client.PostAsJsonAsync("/checkout", checkoutInput);
 
         // Assert
         var checkoutOutput = JsonConvert.DeserializeObject<Error>(

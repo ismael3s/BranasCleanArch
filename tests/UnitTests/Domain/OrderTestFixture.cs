@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Domain.Entities;
 using Domain.VO;
 using UnitTests.Common;
 
@@ -21,6 +22,14 @@ public class OrderTestFixture : BaseFixture
         };
 
         return Cpf.Create(Faker.Random.ArrayElement(validsCpfs));
+    }
+
+    public OrderItem CreateValidOrderItem(int? quantity = default!, decimal? price = default!)
+    {
+        return new OrderItem(Guid.NewGuid(),
+            price ?? Faker.Random.Decimal(1, 1000),
+            quantity ?? Faker.Random.Int(1, 100)
+        );
     }
 }
 

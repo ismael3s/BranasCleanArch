@@ -11,7 +11,7 @@ public class OrderItemTest
     [Trait("Domain", "OrderItem")]
     public void DeveSerPossivelCriarUmaOrdemItemQuandoOsDadosForemValidos()
     {
-        var orderItem = new OrderItem(_faker.Commerce.ProductName(), _faker.Random.Decimal(), _faker.Random.Number(1, 10));
+        var orderItem = new OrderItem(Guid.NewGuid(), _faker.Random.Decimal(), _faker.Random.Number(1, 10));
 
         orderItem.Should().NotBeNull();
         orderItem.Should().BeOfType<OrderItem>();
@@ -21,7 +21,7 @@ public class OrderItemTest
     [Trait("Domain", "OrderItem")]
     public void NaoDeveSerPossivelCriarUmOrderItem_QuandoAQuantidadeEMenorQueUm()
     {
-        var action = () => new OrderItem(_faker.Commerce.ProductName(), _faker.Random.Decimal(), _faker.Random.Number(-100, 0));
+        var action = () => new OrderItem(Guid.NewGuid(), _faker.Random.Decimal(), _faker.Random.Number(-100, 0));
 
         action.Should().Throw<ArgumentException>()
             .WithMessage("Quantidade não pode ser menor do que um");
@@ -31,7 +31,7 @@ public class OrderItemTest
     [Trait("Domain", "OrderItem")]
     public void NaoDeveSerPossivelCriarUmOrderItem_QuandoOPrecoEMenorQueZero()
     {
-        var action = () => new OrderItem(_faker.Commerce.ProductName(), _faker.Random.Decimal(-10.00M, -0.1M), 1);
+        var action = () => new OrderItem(Guid.NewGuid(), _faker.Random.Decimal(-10.00M, -0.1M), 1);
 
         action.Should().Throw<ArgumentException>()
             .WithMessage("Preço não pode ser menor do que zero");

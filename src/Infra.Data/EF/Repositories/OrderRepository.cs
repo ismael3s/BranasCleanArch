@@ -26,7 +26,7 @@ public class OrderRepository : IOrderRepository
             Id = orderItem.Id,
             OrderId = order.Id,
             Price = orderItem.Price,
-            ProductName = orderItem.Name,
+            ProductId = orderItem.ProductId,
             Quantity = orderItem.Quantity
         }).ToList();
 

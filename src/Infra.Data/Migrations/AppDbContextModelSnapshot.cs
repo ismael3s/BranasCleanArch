@@ -89,10 +89,9 @@ namespace Infra.Data.Migrations
                         .HasColumnType("numeric(10,2)")
                         .HasColumnName("price");
 
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("product_name");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_id");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
@@ -102,7 +101,31 @@ namespace Infra.Data.Migrations
 
                     b.HasIndex("OrderId");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("order_item");
+                });
+
+            modelBuilder.Entity("Infra.Data.EF.Models.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("product");
                 });
 
             modelBuilder.Entity("Infra.Data.EF.Models.Order", b =>
@@ -122,7 +145,15 @@ namespace Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Infra.Data.EF.Models.Product", "Product")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Infra.Data.EF.Models.Cupom", b =>
@@ -131,6 +162,11 @@ namespace Infra.Data.Migrations
                 });
 
             modelBuilder.Entity("Infra.Data.EF.Models.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("Infra.Data.EF.Models.Product", b =>
                 {
                     b.Navigation("OrderItems");
                 });

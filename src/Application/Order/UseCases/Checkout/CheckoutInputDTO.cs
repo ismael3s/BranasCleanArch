@@ -4,6 +4,6 @@ public record CheckoutInputDto(string Cpf, List<CheckoutInputItemDto> Items, str
 }
 
 
-public record CheckoutInputItemDto(string Description, decimal Price, int Quantity)
+public record CheckoutInputItemDto(string ProductId, int Quantity)
 {
 }

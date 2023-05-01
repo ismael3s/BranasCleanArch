@@ -10,7 +10,7 @@ public class Order
 
     public IList<OrderItem> Items { get; private set; }
 
-    private Order(Cpf cpf, Cupom? cupom = null, Guid? id = null)
+    private Order(Cpf cpf, Cupom? cupom = null, Guid? id = default)
     {
         Id = id ?? Guid.NewGuid();
         Cpf = cpf;

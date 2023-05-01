@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<ICupomRepository, CupomRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<ICheckoutUseCase, CheckoutUseCase>();
+        services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }

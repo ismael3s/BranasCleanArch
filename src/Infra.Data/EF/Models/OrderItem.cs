@@ -7,8 +7,10 @@ public class OrderItem
     [Column("id")]
     public Guid Id { get; set; }
 
-    [Column("product_name")]
-    public string ProductName { get; set; } = string.Empty;
+    [Column("product_id")]
+    public Guid ProductId { get; set; } = default!;
+
+    public Product Product { get; set; } = default;
 
     [Column("quantity")]
     public int Quantity { get; set; }

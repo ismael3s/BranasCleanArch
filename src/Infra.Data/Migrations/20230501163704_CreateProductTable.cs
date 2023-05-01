@@ -5,10 +5,36 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.Data.Migrations
 {
-    public partial class CreateOrderTable : Migration
+    public partial class CreateProductTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "cupom",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    code = table.Column<string>(type: "text", nullable: false),
+                    discount = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cupom", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "product",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_product", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "order",
                 columns: table => new
@@ -33,7 +59,7 @@ namespace Infra.Data.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    product_name = table.Column<string>(type: "text", nullable: false),
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
                     quantity = table.Column<int>(type: "integer", nullable: false),
                     price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
                     order_id = table.Column<Guid>(type: "uuid", nullable: false)
@@ -45,6 +71,12 @@ namespace Infra.Data.Migrations
                         name: "FK_order_item_order_order_id",
                         column: x => x.order_id,
                         principalTable: "order",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_order_item_product_product_id",
+                        column: x => x.product_id,
+                        principalTable: "product",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -59,6 +91,11 @@ namespace Infra.Data.Migrations
                 name: "IX_order_item_order_id",
                 table: "order_item",
                 column: "order_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_order_item_product_id",
+                table: "order_item",
+                column: "product_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -68,6 +105,12 @@ namespace Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "order");
+
+            migrationBuilder.DropTable(
+                name: "product");
+
+            migrationBuilder.DropTable(
+                name: "cupom");
         }
     }
 }

@@ -10,9 +10,15 @@ public class OrderItemModelConfiguration : IEntityTypeConfiguration<OrderItem>
         builder.HasKey(o => o.Id);
         builder.Property(o => o.Price).IsRequired().HasPrecision(10, 2);
         builder.Property(o => o.Quantity).IsRequired();
-        builder.Property(o => o.ProductName).IsRequired();
+        builder.Property(o => o.ProductId).IsRequired();
         builder.Property(o => o.OrderId).IsRequired();
 
-        builder.HasOne(o => o.Order).WithMany(o => o.OrderItems).HasForeignKey(o => o.OrderId);
+        builder.HasOne(o => o.Order)
+            .WithMany(o => o.OrderItems)
+            .HasForeignKey(o => o.OrderId);
+
+        builder.HasOne(o => o.Product)
+            .WithMany(p => p.OrderItems)
+            .HasForeignKey(o => o.ProductId);
     }
 }

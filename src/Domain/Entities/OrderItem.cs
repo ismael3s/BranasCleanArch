@@ -3,14 +3,14 @@
 public class OrderItem
 {
     public Guid Id { get; private set; }
-    public string Name { get; private set; }
+    public Guid ProductId { get; private set; }
     public decimal Price { get; private set; }
     public int Quantity { get; private set; }
 
-    public OrderItem(string name, decimal price, int quantity)
+    public OrderItem(Guid productId, decimal price, int quantity)
     {
         Id = Guid.NewGuid();
-        Name = name;
+        ProductId = productId;
         Price = price;
         Quantity = quantity;
 

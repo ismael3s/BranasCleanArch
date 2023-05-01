@@ -8,6 +8,7 @@ var configuration = builder.Configuration;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfra(configuration);
+//builder.Services.RunMgratios();
 var app = builder.Build();
 
 app.UseExceptionHandler(exceptionHandler => exceptionHandler.Run(
