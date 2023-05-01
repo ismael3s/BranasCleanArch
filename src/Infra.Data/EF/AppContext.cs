@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Infra.Data.EF;
 public class AppDbContext : DbContext
 {
-    public DbSet<Cupom> Cupoms { get; set; }
+    public DbSet<Coupon> Coupons { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
 

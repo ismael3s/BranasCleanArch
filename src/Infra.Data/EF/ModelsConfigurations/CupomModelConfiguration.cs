@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infra.Data.EF.ModelsConfigurations;
-public class CupomModelConfiguration : IEntityTypeConfiguration<Cupom>
+public class CupomModelConfiguration : IEntityTypeConfiguration<Coupon>
 {
-    public void Configure(EntityTypeBuilder<Cupom> builder)
+    public void Configure(EntityTypeBuilder<Coupon> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(c => c.Code).IsRequired();

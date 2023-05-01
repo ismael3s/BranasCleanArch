@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infra.Data.EF.Models;
-[Table("cupom")]
-public class Cupom
+[Table("coupon")]
+public class Coupon
 {
     [Column("id")]
     public Guid Id { get; set; }

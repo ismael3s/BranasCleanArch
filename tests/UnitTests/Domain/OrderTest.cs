@@ -36,7 +36,7 @@ public class OrderTest
         order.AddItem(_orderTestFixture.CreateValidOrderItem(100, 1));
         order.AddItem(_orderTestFixture.CreateValidOrderItem(100, 1));
         order.AddItem(_orderTestFixture.CreateValidOrderItem(100, 1));
-        order.ApplyCupom(Cupom.Create("VALE20", 20));
+        order.ApplyCupom(Coupon.Create("VALE20", 20));
 
         var total = order.CalculateTotal();
 

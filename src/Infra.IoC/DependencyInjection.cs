@@ -16,7 +16,7 @@ public static class DependencyInjection
             connectionString,
             b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName))
         );
-        services.AddScoped<ICupomRepository, CupomRepository>();
+        services.AddScoped<ICouponRepository, CouponRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<ICheckoutUseCase, CheckoutUseCase>();
         services.AddScoped<IProductRepository, ProductRepository>();

@@ -12,7 +12,7 @@ public class CheckoutFixture : BaseFixture
 
     }
     public Mock<IOrderRepository> GetOrderRepository() => new();
-    public Mock<ICupomRepository> GetCupomRepository() => new();
+    public Mock<ICouponRepository> GetCupomRepository() => new();
     public Mock<IProductRepository> GetProductRepository() => new();
     public Mock<IUnitOfWork> GetUnitOfWork() => new();
 

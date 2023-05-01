@@ -10,7 +10,7 @@ public class Order
     [Column("cpf")]
     public string Cpf { get; set; } = string.Empty;
 
-    public Cupom? Cupom { get; set; }
+    public Coupon? Cupom { get; set; }
 
     [Column("cupom_id")]
     public Guid? CupomId { get; set; }

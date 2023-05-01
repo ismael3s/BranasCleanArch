@@ -7,13 +7,13 @@ namespace Application.Order.UseCases.Checkout;
 public class CheckoutUseCase : ICheckoutUseCase
 {
 
-    private readonly ICupomRepository _cupomRepository;
+    private readonly ICouponRepository _cupomRepository;
     private readonly IOrderRepository _orderRepository;
     private readonly IProductRepository _productRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public CheckoutUseCase(
-        ICupomRepository cupomRepository,
+        ICouponRepository cupomRepository,
         IOrderRepository orderRepository,
         IUnitOfWork unitOfWork,
         IProductRepository productRepository)
@@ -29,9 +29,9 @@ public class CheckoutUseCase : ICheckoutUseCase
         var cpf = Cpf.Create(input.Cpf);
         var order = Entities.Order.Create(cpf);
 
-        if (input.CupomCode is not null)
+        if (input.CouponCode is not null)
         {
-            var cupom = await _cupomRepository.FindByCode(input.CupomCode);
+            var cupom = await _cupomRepository.FindByCode(input.CouponCode);
             order.ApplyCupom(cupom);
         }
 

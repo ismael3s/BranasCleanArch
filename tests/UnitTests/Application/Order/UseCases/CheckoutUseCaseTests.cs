@@ -84,11 +84,11 @@ public class CheckoutUseCaseTests
             mock.FindByCode(It.IsAny<string>())
         ).Returns<string>(parameters =>
         {
-            Task<Cupom> task = parameters switch
+            Task<Coupon> task = parameters switch
             {
-                "VALE20" => Task.FromResult(Cupom.Create(parameters, 20M)),
-                "VALE10" => Task.FromResult(Cupom.Create(parameters, 10M)),
-                _ => Task.FromResult<Cupom>(null!)
+                "VALE20" => Task.FromResult(Coupon.Create(parameters, 20M)),
+                "VALE10" => Task.FromResult(Coupon.Create(parameters, 10M)),
+                _ => Task.FromResult<Coupon>(null!)
             };
             return task;
         });

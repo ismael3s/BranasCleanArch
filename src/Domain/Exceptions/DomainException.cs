@@ -7,4 +7,7 @@ public class DomainException : Exception
 
     }
 
+    protected DomainException(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext) : base(serializationInfo, streamingContext)
+    {
+    }
 }

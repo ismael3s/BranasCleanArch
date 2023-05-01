@@ -6,11 +6,11 @@ public class Order
     public Guid Id { get; private set; }
     public Cpf Cpf { get; private set; }
 
-    public Cupom? Cupom { get; private set; }
+    public Coupon? Cupom { get; private set; }
 
     public IList<OrderItem> Items { get; private set; }
 
-    private Order(Cpf cpf, Cupom? cupom = null, Guid? id = default)
+    private Order(Cpf cpf, Coupon? cupom = null, Guid? id = default)
     {
         Id = id ?? Guid.NewGuid();
         Cpf = cpf;
@@ -18,7 +18,7 @@ public class Order
         Cupom = cupom;
     }
 
-    public static Order Create(Cpf cpf, Cupom? cupom = null)
+    public static Order Create(Cpf cpf, Coupon? cupom = null)
     {
         var order = new Order(cpf, cupom);
         return order;
@@ -39,7 +39,7 @@ public class Order
         return sumOfItems;
     }
 
-    public void ApplyCupom(Cupom cupom)
+    public void ApplyCupom(Coupon cupom)
     {
         if (cupom is null) throw new ArgumentException("Não é possivel aplicar um cupom inexistente");
         Cupom = cupom;

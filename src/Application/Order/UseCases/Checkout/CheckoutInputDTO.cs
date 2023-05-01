@@ -1,5 +1,5 @@
 ﻿namespace Application.Order.UseCases.Checkout;
-public record CheckoutInputDto(string Cpf, List<CheckoutInputItemDto> Items, string? CupomCode = null)
+public record CheckoutInputDto(string Cpf, List<CheckoutInputItemDto> Items, string? CouponCode = null)
 {
 }
 

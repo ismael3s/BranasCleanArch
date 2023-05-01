@@ -15,7 +15,7 @@ public class ApplicationWebFactory : WebApplicationFactory<Program>, IAsyncLifet
 {
     private readonly PostgreSqlContainer _postgreSqlContainer = new PostgreSqlBuilder().Build();
     private HttpClient? _httpClient;
-    public HttpClient HttpClient => _httpClient;
+    public HttpClient HttpClient => _httpClient!;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -64,24 +64,12 @@ public class ApplicationWebFactory : WebApplicationFactory<Program>, IAsyncLifet
 
     public Task ResetDatabaseAsync()
         => Task.CompletedTask;
-    //=> await Respawner.ResetAsync(DbConnection);
 
     public async Task InitializeAsync()
     {
         await _postgreSqlContainer.StartAsync();
         _httpClient = CreateClient();
-        //await InitializeRespawner();
     }
-
-    //private async Task InitializeRespawner()
-    //{
-    //    await DbConnection.OpenAsync();
-    //    _respawner = await Respawner.CreateAsync(DbConnection, new RespawnerOptions
-    //    {
-    //        DbAdapter = DbAdapter.Postgres,
-    //        SchemasToInclude = new[] { "public" }
-    //    });
-    //}
 
     public new async Task DisposeAsync()
         => await _postgreSqlContainer.DisposeAsync();

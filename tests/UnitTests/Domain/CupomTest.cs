@@ -9,9 +9,9 @@ public class CupomTest
     [Trait("Domain", "Cupom")]
     public void DeveSerPossivelCriarUmCupomQuandoOsDadosForemValidos()
     {
-        var cupom = Cupom.Create("VALE20", 20m);
+        var cupom = Coupon.Create("VALE20", 20m);
         cupom.Should().NotBeNull();
-        cupom.Should().BeOfType<Cupom>();
+        cupom.Should().BeOfType<Coupon>();
     }
 
     [Theory(DisplayName = nameof(NaoDeveSerPossivelCriarUmCupom_QuandoNaoHouverCodigo))]
@@ -21,7 +21,7 @@ public class CupomTest
     [InlineData(null!)]
     public void NaoDeveSerPossivelCriarUmCupom_QuandoNaoHouverCodigo(string code)
     {
-        var action = () => Cupom.Create(code, 20m);
+        var action = () => Coupon.Create(code, 20m);
         action.Should().Throw<ArgumentException>().WithMessage("O Código não pode ser vazio");
     }
 
@@ -31,7 +31,7 @@ public class CupomTest
     [InlineData(-100)]
     public void NaoDeveSerPossivelCriarUmCupom_QuandoODescontoForMenorDoQueZero(decimal discount)
     {
-        var action = () => Cupom.Create("Cupom", discount);
+        var action = () => Coupon.Create("Cupom", discount);
         action.Should().Throw<ArgumentException>().WithMessage("O Desconto não pode ser menor do que zero");
     }
 
@@ -41,7 +41,7 @@ public class CupomTest
     [InlineData(100.001)]
     public void NaoDeveSerPossivelCriarUmCupom_QuandoODescontoForMaiorQue100(decimal discount)
     {
-        var action = () => Cupom.Create("Cupom", discount);
+        var action = () => Coupon.Create("Cupom", discount);
         action.Should().Throw<ArgumentException>().WithMessage("O Desconto não pode ser maior do que 100");
     }
 }

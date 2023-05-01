@@ -1,11 +1,11 @@
 ﻿namespace Domain.Entities;
-public class Cupom
+public class Coupon
 {
 
     public Guid Id { get; private set; }
     public string Code { get; private set; }
     public decimal Discount { get; private set; }
-    public Cupom(Guid? id, string code, decimal discount)
+    public Coupon(Guid? id, string code, decimal discount)
     {
         Id = id ?? Guid.NewGuid();
         Code = code;
@@ -14,9 +14,9 @@ public class Cupom
         Validate();
     }
 
-    public static Cupom Create(string code, decimal discount, Guid? id = default)
+    public static Coupon Create(string code, decimal discount, Guid? id = default)
     {
-        return new Cupom(id, code, discount);
+        return new Coupon(id, code, discount);
     }
 
     public void Validate()

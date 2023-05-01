@@ -8,9 +8,9 @@ public class OrderItem
     public Guid Id { get; set; }
 
     [Column("product_id")]
-    public Guid ProductId { get; set; } = default!;
+    public Guid ProductId { get; set; } = Guid.Empty;
 
-    public Product Product { get; set; } = default;
+    public Product Product { get; set; } = new();
 
     [Column("quantity")]
     public int Quantity { get; set; }
