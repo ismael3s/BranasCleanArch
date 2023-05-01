@@ -4,18 +4,11 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
-using Respawn;
-using System.Data.Common;
-using Testcontainers.PostgreSql;
 
 namespace IntegrationTests;
-public class ApplicationWebFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class ApplicationWebFactory : WebApplicationFactory<Program>
 {
-    private readonly PostgreSqlContainer _postgreSqlContainer = new PostgreSqlBuilder().Build();
-    public HttpClient HttpClient { get; private set; } = null!;
-    private DbConnection _dbConnection = default!;
-    private Respawner _respawner = default!;
+    public HttpClient HttpClient { get; private set; } = default!;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
 
@@ -25,38 +18,9 @@ public class ApplicationWebFactory : WebApplicationFactory<Program>, IAsyncLifet
             services.Remove(teste!);
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseNpgsql(_postgreSqlContainer.GetConnectionString());
+                options.UseInMemoryDatabase(Guid.NewGuid().ToString());
             });
         });
-    }
-    public async Task InitializeAsync()
-    {
-        await _postgreSqlContainer.StartAsync();
-        _dbConnection = new NpgsqlConnection(_postgreSqlContainer.GetConnectionString());
-        HttpClient = CreateClient();
-        await InitiializeRespawner();
-
-    }
-
-    public async Task InitiializeRespawner()
-    {
-        await _dbConnection.OpenAsync();
-        _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
-        {
-            DbAdapter = DbAdapter.Postgres,
-            SchemasToInclude = new[] { "public" }
-        });
-    }
-
-    public async Task ResetDatabaseAsync()
-    {
-        await _respawner.ResetAsync(_dbConnection);
-    }
-
-    async Task IAsyncLifetime.DisposeAsync()
-    {
-        await _postgreSqlContainer.StopAsync();
-        //await _postgreSqlContainer.DisposeAsync();
     }
 }
 

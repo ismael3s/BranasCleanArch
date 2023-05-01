@@ -12,7 +12,9 @@ public class CheckoutUseCaseTests
     public async Task DeveCriarUmPedidoComTresItems()
     {
         var cupomRepository = new Mock<ICupomRepository>();
-        var checkoutUseCase = new CheckoutUseCase(cupomRepository.Object);
+        var orderRepository = new Mock<IOrderRepository>();
+        var unitOfWork = new Mock<IUnitOfWork>();
+        var checkoutUseCase = new CheckoutUseCase(cupomRepository.Object, orderRepository.Object, unitOfWork.Object);
         var inputItems = new List<CheckoutInputItemDto>
         {
             new CheckoutInputItemDto("Produto 1", 100, 1),
@@ -31,7 +33,9 @@ public class CheckoutUseCaseTests
     public async Task NaoDeveSerPossivelCriarUmPedido_QuandoOCpfEInvalido()
     {
         var cupomRepository = new Mock<ICupomRepository>();
-        var checkoutUseCase = new CheckoutUseCase(cupomRepository.Object);
+        var orderRepository = new Mock<IOrderRepository>();
+        var unitOfWork = new Mock<IUnitOfWork>();
+        var checkoutUseCase = new CheckoutUseCase(cupomRepository.Object, orderRepository.Object, unitOfWork.Object);
         var inputItems = new List<CheckoutInputItemDto>
         {
             new CheckoutInputItemDto("Produto 1", 100, 1),
@@ -63,8 +67,9 @@ public class CheckoutUseCaseTests
             };
             return task;
         });
-
-        var checkoutUseCase = new CheckoutUseCase(cupomRepository.Object);
+        var orderRepository = new Mock<IOrderRepository>();
+        var unitOfWork = new Mock<IUnitOfWork>();
+        var checkoutUseCase = new CheckoutUseCase(cupomRepository.Object, orderRepository.Object, unitOfWork.Object);
         var inputItems = new List<CheckoutInputItemDto>
         {
             new CheckoutInputItemDto("Produto 1", 100, 1),

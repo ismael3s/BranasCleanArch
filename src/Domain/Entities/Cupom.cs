@@ -1,19 +1,22 @@
 ﻿namespace Domain.Entities;
 public class Cupom
 {
+
+    public Guid Id { get; private set; }
     public string Code { get; private set; }
     public decimal Discount { get; private set; }
-    public Cupom(string code, decimal discount)
+    public Cupom(Guid? id, string code, decimal discount)
     {
+        Id = id ?? Guid.NewGuid();
         Code = code;
         Discount = discount;
 
         Validate();
     }
 
-    public static Cupom Create(string code, decimal discount)
+    public static Cupom Create(string code, decimal discount, Guid? id = default)
     {
-        return new Cupom(code, discount);
+        return new Cupom(id, code, discount);
     }
 
     public void Validate()

@@ -1,0 +1,5 @@
+{
+    "ConnectionStrings": {
+        "SQL": "User ID=root;Password=root;Host=localhost;Port=5432;Database=db_test;"
+    }
+}

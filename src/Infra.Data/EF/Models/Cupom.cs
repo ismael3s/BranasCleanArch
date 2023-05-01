@@ -11,4 +11,6 @@ public class Cupom
     [Column("discount")]
     public decimal Discount { get; set; }
 
+    public Order? Order { get; set; }
+
 }

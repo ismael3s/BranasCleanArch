@@ -1,6 +1,6 @@
 ﻿namespace UnitTests.Application.Order.UseCases;
 
-public class CheckoutTestMemberData
+public static class CheckoutTestMemberData
 {
     public static IEnumerable<object[]> GetCuponsForTest()
     {

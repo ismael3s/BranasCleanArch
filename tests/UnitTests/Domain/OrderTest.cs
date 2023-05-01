@@ -32,10 +32,11 @@ public class OrderTest
     [Trait("Domain", "Order")]
     public void DeveCriarUmPedidoComTresItems_AplicarUmCupomDeDesconto_ECalcularOValorTotal()
     {
-        var order = Order.Create(_orderTestFixture.RandomValidCpf(), new Cupom("VALE20", 20m));
+        var order = Order.Create(_orderTestFixture.RandomValidCpf());
         order.AddItem(new OrderItem("Produto 1", 100, 1));
         order.AddItem(new OrderItem("Produto 2", 100, 1));
         order.AddItem(new OrderItem("Produto 3", 100, 1));
+        order.ApplyCupom(Cupom.Create("VALE20", 20));
 
         var total = order.CalculateTotal();
 
