@@ -17,7 +17,7 @@ public class CheckoutUseCaseTests
 
         var context = new AppDbContext(
              new DbContextOptionsBuilder<AppDbContext>()
-             .UseNpgsql("User ID=root;Password=root;Host=localhost;Port=5432;Database=branas_db;")
+             .UseNpgsql("User ID=root;Password=root;Host=localhost;Port=5432;Database=db;")
              .Options
          );
 
